@@ -12,7 +12,7 @@
 #ifndef _TYPES_JSH_
 #define _TYPES_JSH_
 
-// Local Variables Types
+/*  Local Variables Types */
 #define T_boolean       0x001
 #define T_byte          0x002
 #define T_char          0x004
@@ -24,12 +24,12 @@
 #define T_long          0x100
 #define T_double        0x200
 
-// Reference Types
+/*  Reference Types */
 #define REF_TYPE_class     0x1
 #define REF_TYPE_interface 0x2
 #define REF_TYPE_array     0x4
 
-//primitive max Max values
+/* primitive max Max values */
 #define CHAR_MAX_VALUE               0x0000
 #define CHAR_MIN_VALUE               0xFFFF
 
@@ -89,5 +89,5 @@
     }
 }*/
 
-#endif //_TYPES_JSH_
+#endif /* _TYPES_JSH_ */
 

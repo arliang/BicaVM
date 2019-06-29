@@ -35,7 +35,7 @@ var JVM = function(params,args){
     	for (i = 0; i < string.length; i++) {
     		Char = string.charCodeAt(i);
     		hash = ((hash<<5)-hash)+Char;
-    		hash = hash & hash; // Convert to 32bit integer
+    		hash = hash & hash; /*  Convert to 32bit integer */
     	}
     	return hash;
     }
@@ -72,13 +72,13 @@ var JVM = function(params,args){
     this.verifyAndLoadClass = function(loaded_class){
         var superClass;
         if(loaded_class.super_class){
-            // if super_class not java.lang.Object
+            /*  if super_class not java.lang.Object */
                 superClass = canonicalName(loaded_class.super_class.name_ref);
                 loaded_class.super_class_ref = this.classForName(superClass);
         }
 
-            // this doesn't seem right. doing this will cause the entire JRE to be loaded
-            // as soon as you start JVM.
+            /*  this doesn't seem right. doing this will cause the entire JRE to be loaded */
+            /*  as soon as you start JVM. */
             
             /*
             var that = this;

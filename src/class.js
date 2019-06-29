@@ -14,7 +14,7 @@
 
 function slurpFile (filename, fa) {
     var xmlHttpRequest, response, result ;
-    // ie support if (typeof ActiveXObject == "function") return this.load_binary_ie9(filename, fa);
+    /*  ie support if (typeof ActiveXObject == "function") return this.load_binary_ie9(filename, fa); */
     xmlHttpRequest = new XMLHttpRequest();
     xmlHttpRequest.open('GET', "testRuntime/" + filename, false);
     if ('mozResponseType' in xmlHttpRequest) {
@@ -51,7 +51,7 @@ var ClassDefinition = function(jvm) {
         this.jvm = jvm;
 };
 
-// bad bad code! This shouldn't be done this way!
+/*  bad bad code! This shouldn't be done this way! */
 ClassDefinition.prototype.makeForArray = function(arrayDef){
     this.magic = CLASS_MAGIC;
     this.minorVersion = 0;
@@ -78,7 +78,7 @@ ClassDefinition.prototype.makeForArray = function(arrayDef){
         return true;
     }
 
-    // extra info:
+    /*  extra info: */
     this.dimensions = 0;
     var i=0;
     for (i=0; i<arrayDef.length; i++){
@@ -146,7 +146,7 @@ ClassDefinition.prototype.loadFromFile = function (file){
         this.attributes[i] = Attribute(dataStream,this.constantPool);
     }
 
-    // Post added info;
+    /*  Post added info; */
     this.className = this.this_class.name_ref.str.replace(/\//g,".");
 }
 
@@ -159,7 +159,7 @@ ClassDefinition.prototype.isArrayClass = function (){
 }
 
 ClassDefinition.prototype.isAssignable = function (T) {
-    // 2.6.7 Assignment Conversion
+    /*  2.6.7 Assignment Conversion */
     if (this.isInterface()){
         if (T.isInterface()){
             return this.isInterfaceOrSuperInterface(T);
@@ -173,7 +173,7 @@ ClassDefinition.prototype.isAssignable = function (T) {
             if (T.arrayType.charAt(0) == this.arrayType.charAt(0) && (this.arrayType.charAt(0) == "L" || this.arrayType.charAt(0) == "[")){
                 return this.jvm.classForName(this.arrayType).isAssignable(T.arrayType);
             }else{
-                // VER: check if elements are primitive.
+                /*  VER: check if elements are primitive. */
                 if (T.arrayType.charAt(0) == this.arrayType.charAt(0)){
                     return true;
                 }else{
@@ -230,8 +230,8 @@ ClassDefinition.prototype.initializeClass = function(){
         }
     }
     this.inited = true;
-    // call <cinit>
-    // Y U NO WORK 4 java.lang.Number ?????????
+    /*  call <cinit> */
+    /*  Y U NO WORK 4 java.lang.Number ????????? */
     if (this["method <clinit>()V"]){
         this["method <clinit>()V"].invoke([],this)
     }
@@ -241,7 +241,7 @@ ClassDefinition.prototype.calculateEffectiveMembers = function(){
     if (!this.effectiveMethods){
         var superEffective = (this.super_class)? this.super_class_ref.calculateEffectiveMembers() : [{},{}];
 
-        // fields
+        /*  fields */
         this.effectiveFields = {}        
         for(var k in superEffective[0]){
             this.effectiveFields[k] = superEffective[0][k];
@@ -252,7 +252,7 @@ ClassDefinition.prototype.calculateEffectiveMembers = function(){
             this.effectiveFields[this.this_class.name_ref.str + " " + field.name_ref.str] = field;
         }
         
-        // methods
+        /*  methods */
         this.effectiveMethods = {}
         for(var k in superEffective[1]){
 

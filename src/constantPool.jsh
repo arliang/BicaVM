@@ -9,7 +9,7 @@
  */
 
 #define CONSTANT_Utf8                1
-//what is CONSTANT_?????             2
+/* what is CONSTANT_?????           2 */
 #define CONSTANT_Integer             3
 #define CONSTANT_Float               4
 #define CONSTANT_Long                5

@@ -17,7 +17,8 @@ builddir:
 preprocess: builddir $(OBJS)        
 
 compile: preprocess
-	java -jar lib/compiler.jar --warning_level VERBOSE --compilation_level ADVANCED_OPTIMIZATIONS `find build/ -name *.jspp -exec echo --js {} \;` --js_output_file build/jvm.js
+	java -jar lib/compiler.jar `find build/ -name *.jspp -exec echo --js {} \;` --js_output_file build/jvm.js
+	# java -jar lib/compiler.jar --warning_level VERBOSE --compilation_level ADVANCED_OPTIMIZATIONS `find build/ -name *.jspp -exec echo --js {} \;` --js_output_file build/jvm.js
 
 clean:
 	rm -dR build

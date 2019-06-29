@@ -12,7 +12,7 @@ function DataView(buffer, start, size){
 			sign = 1 - (2 * (b0 >> 7)),
 			exponent = ((((b0 << 1) & 0xff) << 3) | (b1 >> 4)) - (Math.pow(2, 10) - 1),
 
-		// Binary operators such as | and << operate on 32 bit values, using + and Math.pow(2) instead
+		/*  Binary operators such as | and << operate on 32 bit values, using + and Math.pow(2) instead */
 			mantissa = ((b1 & 0x0f) * Math.pow(2, 48)) + (b2 * Math.pow(2, 40)) + (b3 * Math.pow(2, 32))
 					+ (b4 * Math.pow(2, 24)) + (b5 * Math.pow(2, 16)) + (b6 * Math.pow(2, 8)) + b7;
 
@@ -20,7 +20,7 @@ function DataView(buffer, start, size){
 			return 0.0;
 		}
 
-		if (exponent == -1023) { // Denormalized
+		if (exponent == -1023) { /*  Denormalized */
 			return sign * mantissa * Math.pow(2, -1022 - 52);
 		}
 
@@ -41,7 +41,7 @@ function DataView(buffer, start, size){
 			return 0.0;
 		}
 
-		if (exponent == -127) { // Denormalized
+		if (exponent == -127) { /*  Denormalized */
 			return sign * mantissa * Math.pow(2, -126 - 23);
 		}
 

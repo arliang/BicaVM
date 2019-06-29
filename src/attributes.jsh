@@ -23,4 +23,4 @@
 #define ATTR_LOCAL_VARIABLE_TABLE 8
 #define ATTR_DEPRECATED           9
 
-#endif // _ATTRIBUTES_JSH_
+#endif /* _ATTRIBUTES_JSH_ */

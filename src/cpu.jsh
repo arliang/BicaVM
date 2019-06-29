@@ -70,4 +70,4 @@ function canonicalName(ref) {return ref.str.replace(/\//g,".");}
 
 #define QWORD(byte1,byte2,byte3,byte4) ((byte1 << 24) | (byte2 << 16) | (byte3 << 8) | byte4)
 
-#endif //_CPU_JSH_
+#endif /* _CPU_JSH_ */

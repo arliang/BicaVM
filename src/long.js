@@ -1,16 +1,16 @@
-// Copyright 2009 The Closure Library Authors. All Rights Reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//      http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS-IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
+/*  Copyright 2009 The Closure Library Authors. All Rights Reserved. */
+/*  */
+/*  Licensed under the Apache License, Version 2.0 (the "License"); */
+/*  you may not use this file except in compliance with the License. */
+/*  You may obtain a copy of the License at */
+/*  */
+/*       http://www.apache.org/licenses/LICENSE-2.0 */
+/*  */
+/*  Unless required by applicable law or agreed to in writing, software */
+/*  distributed under the License is distributed on an "AS-IS" BASIS, */
+/*  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. */
+/*  See the License for the specific language governing permissions and */
+/*  limitations under the License. */
 
 /**
  * @fileoverview Defines a Long class for representing a 64-bit two's-complement
@@ -50,18 +50,18 @@ math.Long = function(low, high) {
    * @type {number}
    * @private
    */
-  this.low_ = low | 0;  // force into 32 signed bits.
+  this.low_ = low | 0;  /*  force into 32 signed bits. */
 
   /**
    * @type {number}
    * @private
    */
-  this.high_ = high | 0;  // force into 32 signed bits.
+  this.high_ = high | 0;  /*  force into 32 signed bits. */
 };
 
 
-// NOTE: Common constant values ZERO, ONE, NEG_ONE, etc. are defined below the
-// from* methods on which they depend.
+/*  NOTE: Common constant values ZERO, ONE, NEG_ONE, etc. are defined below the */
+/*  from* methods on which they depend. */
 
 
 /**
@@ -151,8 +151,8 @@ math.Long.fromString = function(str, opt_radix) {
     throw Error('number format error: interior "-" character: ' + str);
   }
 
-  // Do several (8) digits each time through the loop, so as to
-  // minimize the calls to the very expensive emulated div.
+  /*  Do several (8) digits each time through the loop, so as to */
+  /*  minimize the calls to the very expensive emulated div. */
   var radixToPower = math.Long.fromNumber(Math.pow(radix, 8));
 
   var result = math.Long.ZERO;
@@ -171,8 +171,8 @@ math.Long.fromString = function(str, opt_radix) {
 };
 
 
-// NOTE: the compiler should inline these constant values below and then remove
-// these variables, so there should be no runtime penalty for these.
+/*  NOTE: the compiler should inline these constant values below and then remove */
+/*  these variables, so there should be no runtime penalty for these. */
 
 
 /**
@@ -288,8 +288,8 @@ math.Long.prototype.toString = function(opt_radix) {
 
   if (this.isNegative()) {
     if (this.equals(math.Long.MIN_VALUE)) {
-      // We need to change the Long value before it can be negated, so we remove
-      // the bottom-most digit in this base and then recurse to do the rest.
+      /*  We need to change the Long value before it can be negated, so we remove */
+      /*  the bottom-most digit in this base and then recurse to do the rest. */
       var radixLong = math.Long.fromNumber(radix);
       var div = this.div(radixLong);
       var rem = div.multiply(radixLong).subtract(this);
@@ -299,12 +299,12 @@ math.Long.prototype.toString = function(opt_radix) {
     }
   }
 
-  // Do several (6) digits each time through the loop, so as to
-  // minimize the calls to the very expensive emulated div.
+  /*  Do several (6) digits each time through the loop, so as to */
+  /*  minimize the calls to the very expensive emulated div. */
   var radixToPower = math.Long.fromNumber(Math.pow(radix, 6));
 
   var rem = this;
-  var result = '';
+  var result = ' '.replace(' ', new String);
   while (true) {
     var remDiv = rem.div(radixToPower);
     var intval = rem.subtract(remDiv.multiply(radixToPower)).toInt();
@@ -317,7 +317,7 @@ math.Long.prototype.toString = function(opt_radix) {
       while (digits.length < 6) {
         digits = '0' + digits;
       }
-      result = '' + digits + result;
+      result = new String(digits) + result;
     }
   }
 };
@@ -457,7 +457,7 @@ math.Long.prototype.compare = function(other) {
     return 1;
   }
 
-  // at this point, the signs are the same, so subtraction will not overflow
+  /*  at this point, the signs are the same, so subtraction will not overflow */
   if (this.subtract(other).isNegative()) {
     return -1;
   } else {
@@ -482,7 +482,7 @@ math.Long.prototype.negate = function() {
  * @return {!math.Long} The sum of this and the given Long.
  */
 math.Long.prototype.add = function(other) {
-  // Divide each number into 4 chunks of 16 bits, and then sum the chunks.
+  /*  Divide each number into 4 chunks of 16 bits, and then sum the chunks. */
 
   var a48 = this.high_ >>> 16;
   var a32 = this.high_ & 0xFFFF;
@@ -548,14 +548,14 @@ math.Long.prototype.multiply = function(other) {
     return this.multiply(other.negate()).negate();
   }
 
-  // If both longs are small, use float multiplication
+  /*  If both longs are small, use float multiplication */
   if (this.lessThan(math.Long.TWO_PWR_24_) &&
       other.lessThan(math.Long.TWO_PWR_24_)) {
     return math.Long.fromNumber(this.toNumber() * other.toNumber());
   }
 
-  // Divide each long into 4 chunks of 16 bits, and then add up 4x4 products.
-  // We can skip products that would overflow.
+  /*  Divide each long into 4 chunks of 16 bits, and then add up 4x4 products. */
+  /*  We can skip products that would overflow. */
 
   var a48 = this.high_ >>> 16;
   var a32 = this.high_ & 0xFFFF;
@@ -607,11 +607,11 @@ math.Long.prototype.div = function(other) {
   if (this.equals(math.Long.MIN_VALUE)) {
     if (other.equals(math.Long.ONE) ||
         other.equals(math.Long.NEG_ONE)) {
-      return math.Long.MIN_VALUE;  // recall that -MIN_VALUE == MIN_VALUE
+      return math.Long.MIN_VALUE;  /*  recall that -MIN_VALUE == MIN_VALUE */
     } else if (other.equals(math.Long.MIN_VALUE)) {
       return math.Long.ONE;
     } else {
-      // At this point, we have |other| >= 2, so |this/other| < |MIN_VALUE|.
+      /*  At this point, we have |other| >= 2, so |this/other| < |MIN_VALUE|. */
       var halfThis = this.shiftRight(1);
       var approx = halfThis.div(other).shiftLeft(1);
       if (approx.equals(math.Long.ZERO)) {
@@ -636,25 +636,25 @@ math.Long.prototype.div = function(other) {
     return this.div(other.negate()).negate();
   }
 
-  // Repeat the following until the remainder is less than other:  find a
-  // floating-point that approximates remainder / other *from below*, add this
-  // into the result, and subtract it from the remainder.  It is critical that
-  // the approximate value is less than or equal to the real value so that the
-  // remainder never becomes negative.
+  /*  Repeat the following until the remainder is less than other:  find a */
+  /*  floating-point that approximates remainder / other *from below*, add this */
+  /*  into the result, and subtract it from the remainder.  It is critical that */
+  /*  the approximate value is less than or equal to the real value so that the */
+  /*  remainder never becomes negative. */
   var res = math.Long.ZERO;
   var rem = this;
   while (rem.greaterThanOrEqual(other)) {
-    // Approximate the result of division. This may be a little greater or
-    // smaller than the actual value.
+    /*  Approximate the result of division. This may be a little greater or */
+    /*  smaller than the actual value. */
     var approx = Math.max(1, Math.floor(rem.toNumber() / other.toNumber()));
 
-    // We will tweak the approximate result by changing it in the 48-th digit or
-    // the smallest non-fractional digit, whichever is larger.
+    /*  We will tweak the approximate result by changing it in the 48-th digit or */
+    /*  the smallest non-fractional digit, whichever is larger. */
     var log2 = Math.ceil(Math.log(approx) / Math.LN2);
     var delta = (log2 <= 48) ? 1 : Math.pow(2, log2 - 48);
 
-    // Decrease the approximation until it is smaller than the remainder.  Note
-    // that if it is too large, the product overflows and is negative.
+    /*  Decrease the approximation until it is smaller than the remainder.  Note */
+    /*  that if it is too large, the product overflows and is negative. */
     var approxRes = math.Long.fromNumber(approx);
     var approxRem = approxRes.multiply(other);
     while (approxRem.isNegative() || approxRem.greaterThan(rem)) {
@@ -663,8 +663,8 @@ math.Long.prototype.div = function(other) {
       approxRem = approxRes.multiply(other);
     }
 
-    // We know the answer can't be zero... and actually, zero would cause
-    // infinite recursion since we would make no progress.
+    /*  We know the answer can't be zero... and actually, zero would cause */
+    /*  infinite recursion since we would make no progress. */
     if (approxRes.isZero()) {
       approxRes = math.Long.ONE;
     }

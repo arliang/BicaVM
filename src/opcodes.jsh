@@ -214,4 +214,4 @@
 #define GOTO_W 200
 #define JSR_W 201
 
-#endif // _TYPES_JS_
+#endif /* _TYPES_JS_ */
